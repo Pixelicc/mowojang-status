@@ -1,0 +1,275 @@
+metrics: false
+
+storage:
+  type: sqlite
+  path: /data/data.db
+  
+ui:
+  title: Mowojang Status Page
+  header: Mowojang Status
+  description: "Simple Dashboard to view Uptime/Downtime of Mowojang and related APIs."
+  dashboard-heading: " "
+  dashboard-subheading: " "
+  default-sort-by: group
+  
+.global_settings: &global_settings
+  interval: 5m
+  ui:
+    hide-errors: true
+    dont-resolve-failed-conditions: true
+
+endpoints:
+  - name: Mowojang API - GET /:username
+    group: Mowojang API
+    url: https://mowojang.matdoes.dev/pixelic
+    conditions:
+      - "[STATUS] == 200"
+      - "[BODY].id == 14727faefbdc4aff848cd2713eb9939e"
+      - "[BODY].name == Pixelic"
+    <<: *global_settings
+  - name: Mowojang API - GET /:UUID
+    group: Mowojang API
+    url: https://mowojang.matdoes.dev/14727faefbdc4aff848cd2713eb9939e
+    conditions:
+      - "[STATUS] == 200"
+      - "[BODY].id == 14727faefbdc4aff848cd2713eb9939e"
+      - "[BODY].name == Pixelic"
+    <<: *global_settings
+  - name: Mowojang API - GET /users/profiles/minecraft/:username
+    group: Mowojang API
+    url: https://mowojang.matdoes.dev/users/profiles/minecraft/pixelic
+    conditions:
+      - "[STATUS] == 200"
+      - "[BODY].id == 14727faefbdc4aff848cd2713eb9939e"
+      - "[BODY].name == Pixelic"
+    <<: *global_settings
+  - name: Mowojang API - GET /session/minecraft/profile/:UUID
+    group: Mowojang API
+    url: https://mowojang.matdoes.dev/session/minecraft/profile/03197f1eabd74794b8668f513db2d2f0
+    conditions:
+      - "[STATUS] == 200"
+      - "[BODY].id == 03197f1eabd74794b8668f513db2d2f0"
+      - "[BODY].name == Pixic"
+      - has([BODY].properties) == true
+    <<: *global_settings
+  - name: Mowojang API - POST / - [username,UUID]
+    group: Mowojang API
+    url: https://mowojang.matdoes.dev/
+    method: POST
+    headers:
+      Content-Type: application/json
+    body: '["Pixelic","Pixic"]'
+    conditions:
+      - "[STATUS] == 200"
+      - "[BODY][0].id != ''"
+      - "[BODY][1].id != ''"
+    <<: *global_settings
+  - name: Mojang API - GET /session/minecraft/profile/:UUID
+    group: Minecraft API
+    url: https://sessionserver.mojang.com/session/minecraft/profile/03197f1eabd74794b8668f513db2d2f0
+    conditions:
+      - "[STATUS] == 200"
+      - "[BODY].id == 03197f1eabd74794b8668f513db2d2f0"
+      - "[BODY].name == Pixic"
+      - has([BODY].properties) == true
+    <<: *global_settings
+  - name: Mojang API - GET /session/minecraft/profile/:UUID?unsigned=false
+    group: Minecraft API
+    url: https://sessionserver.mojang.com/session/minecraft/profile/03197f1eabd74794b8668f513db2d2f0?unsigned=false
+    conditions:
+      - "[STATUS] == 200"
+      - "[BODY].id == 03197f1eabd74794b8668f513db2d2f0"
+      - "[BODY].name == Pixic"
+      - has([BODY].properties) == true
+    <<: *global_settings
+  - name: Mojang API - GET /users/profiles/minecraft/:username
+    group: Minecraft API
+    url: https://api.mojang.com/users/profiles/minecraft/pixelic
+    conditions:
+      - "[STATUS] == 200"
+      - "[BODY].id == 14727faefbdc4aff848cd2713eb9939e"
+      - "[BODY].name == Pixelic"
+    <<: *global_settings
+  - name: Services API - GET /minecraft/profile/lookup/name/:username
+    group: Minecraft API
+    url: https://api.minecraftservices.com/minecraft/profile/lookup/name/pixelic
+    conditions:
+      - "[STATUS] == 200"
+      - "[BODY].id == 14727faefbdc4aff848cd2713eb9939e"
+      - "[BODY].name == Pixelic"
+    <<: *global_settings
+  - name: Mojang API - GET /minecraft/profile/lookup/name/:username
+    group: Minecraft API
+    url: https://api.mojang.com/minecraft/profile/lookup/name/pixelic
+    conditions:
+      - "[STATUS] == 200"
+      - "[BODY].id == 14727faefbdc4aff848cd2713eb9939e"
+      - "[BODY].name == Pixelic"
+    <<: *global_settings
+  - name: Services API - GET /minecraft/profile/lookup/:UUID
+    group: Minecraft API
+    url: https://api.minecraftservices.com/minecraft/profile/lookup/14727faefbdc4aff848cd2713eb9939e
+    conditions:
+      - "[STATUS] == 200"
+      - "[BODY].id == 14727faefbdc4aff848cd2713eb9939e"
+      - "[BODY].name == Pixelic"
+    <<: *global_settings
+  - name: Mojang API - POST /profiles/minecraft - [username,username]
+    group: Minecraft API
+    url: https://api.mojang.com/profiles/minecraft
+    method: POST
+    headers:
+      Content-Type: application/json
+    body: '["Pixelic","Pixic"]'
+    conditions:
+      - "[STATUS] == 200"
+      - "[BODY][0].id != ''"
+      - "[BODY][1].id != ''"
+    <<: *global_settings
+  - name: Services API - POST /minecraft/profile/lookup/bulk/byname - [username,username]
+    group: Minecraft API
+    url: https://api.minecraftservices.com/minecraft/profile/lookup/bulk/byname
+    method: POST
+    headers:
+      Content-Type: application/json
+    body: '["Pixelic","Pixic"]'
+    conditions:
+      - "[STATUS] == 200"
+      - "[BODY][0].id != ''"
+      - "[BODY][1].id != ''"
+    <<: *global_settings
+  - name: Mojang API - POST /minecraft/profile/lookup/bulk/byname - [username,username]
+    group: Minecraft API
+    url: https://api.mojang.com/minecraft/profile/lookup/bulk/byname
+    method: POST
+    headers:
+      Content-Type: application/json
+    body: '["Pixelic","Pixic"]'
+    conditions:
+      - "[STATUS] == 200"
+      - "[BODY][0].id != ''"
+      - "[BODY][1].id != ''"
+    <<: *global_settings
+  - name: Minecraft API - GET /texture/:hash
+    group: Minecraft API
+    url: http://textures.minecraft.net/texture/56dab0d218f41af5812c4b4692719ab3b2f28ef668338f0753336c79acb6b5fa
+    conditions:
+      - "[STATUS] == 200"
+      - "[BODY] != ''"
+    <<: *global_settings
+  - name: Seraph API - GET /:username
+    group: Seraph API
+    url: https://mowojang.seraph.si/pixelic
+    conditions:
+      - "[STATUS] == 200"
+      - "[BODY].id == 14727faefbdc4aff848cd2713eb9939e"
+      - "[BODY].name == Pixelic"
+    <<: *global_settings
+  - name: Seraph API - GET /:UUID
+    group: Seraph API
+    url: https://mowojang.seraph.si/14727faefbdc4aff848cd2713eb9939e
+    conditions:
+      - "[STATUS] == 200"
+      - "[BODY].id == 14727faefbdc4aff848cd2713eb9939e"
+      - "[BODY].name == Pixelic"
+    <<: *global_settings
+  - name: Seraph API - GET /users/profiles/minecraft/:username
+    group: Seraph API
+    url: https://mowojang.seraph.si/users/profiles/minecraft/pixelic
+    conditions:
+      - "[STATUS] == 200"
+      - "[BODY].id == 14727faefbdc4aff848cd2713eb9939e"
+      - "[BODY].name == Pixelic"
+    <<: *global_settings
+  - name: Seraph API - GET /session/minecraft/profile/:UUID
+    group: Seraph API
+    url: https://mowojang.seraph.si/session/minecraft/profile/03197f1eabd74794b8668f513db2d2f0
+    conditions:
+      - "[STATUS] == 200"
+      - "[BODY].id == 03197f1eabd74794b8668f513db2d2f0"
+      - "[BODY].name == Pixic"
+      - has([BODY].properties) == true
+    <<: *global_settings
+  - name: Seraph API - POST / - [username,UUID]
+    group: Seraph API
+    url: https://mowojang.seraph.si/
+    method: POST
+    headers:
+      Content-Type: application/json
+    body: '["Pixelic","Pixic"]'
+    conditions:
+      - "[STATUS] == 200"
+      - "[BODY][0].id != ''"
+      - "[BODY][1].id != ''"
+    <<: *global_settings
+  - name: Ashcon API - GET /mojang/v2/user/:username
+    group: Other APIs
+    url: https://api.ashcon.app/mojang/v2/user/pixic
+    conditions:
+      - "[STATUS] == 200"
+      - "[BODY].uuid == 03197f1e-abd7-4794-b866-8f513db2d2f0"
+      - "[BODY].username == Pixic"
+      - has([BODY].textures) == true
+    <<: *global_settings
+  - name: Ashcon API - GET /mojang/v2/user/:UUID
+    group: Other APIs
+    url: https://api.ashcon.app/mojang/v2/user/03197f1eabd74794b8668f513db2d2f0
+    conditions:
+      - "[STATUS] == 200"
+      - "[BODY].uuid == 03197f1e-abd7-4794-b866-8f513db2d2f0"
+      - "[BODY].username == Pixic"
+      - has([BODY].textures) == true
+    <<: *global_settings
+  - name: SkinRestorer API - GET /mojang/uuid/:username
+    group: Other APIs
+    url: https://eclipse.skinsrestorer.net/mojang/uuid/pixic
+    conditions:
+      - "[STATUS] == 200"
+      - "[BODY].exists == true"
+      - "[BODY].uuid == 03197f1e-abd7-4794-b866-8f513db2d2f0"
+    <<: *global_settings
+  - name: SkinRestorer API - GET /mojang/skin/:UUID
+    group: Other APIs
+    url: https://eclipse.skinsrestorer.net/mojang/skin/03197f1eabd74794b8668f513db2d2f0
+    conditions:
+      - "[STATUS] == 200"
+      - "[BODY].exists == true"
+      - has([BODY].skinProperty) == true
+    <<: *global_settings
+  - name: CraftHead API - GET /profile/:username
+    group: Other APIs
+    url: https://crafthead.net/profile/pixic
+    conditions:
+      - "[STATUS] == 200"
+      - "[BODY].id == 03197f1eabd74794b8668f513db2d2f0"
+      - "[BODY].name == Pixic"
+      - has([BODY].properties) == true
+    <<: *global_settings
+  - name: CraftHead API - GET /profile/:UUID
+    group: Other APIs
+    url: https://crafthead.net/profile/03197f1eabd74794b8668f513db2d2f0
+    conditions:
+      - "[STATUS] == 200"
+      - "[BODY].id == 03197f1eabd74794b8668f513db2d2f0"
+      - "[BODY].name == Pixic"
+      - has([BODY].properties) == true
+    <<: *global_settings
+  - name: PlayerDB API - GET /profile/:username
+    group: Other APIs
+    url: https://playerdb.co/api/player/minecraft/pixic
+    conditions:
+      - "[STATUS] == 200"
+      - "[BODY].data.player.raw_id == 03197f1eabd74794b8668f513db2d2f0"
+      - "[BODY].data.player.username == Pixic"
+      - has([BODY].data.player.properties) == true
+    <<: *global_settings
+  - name: PlayerDB API - GET /profile/:UUID
+    group: Other APIs
+    url: https://playerdb.co/api/player/minecraft/03197f1eabd74794b8668f513db2d2f0
+    conditions:
+      - "[STATUS] == 200"
+      - "[BODY].data.player.raw_id == 03197f1eabd74794b8668f513db2d2f0"
+      - "[BODY].data.player.username == Pixic"
+      - has([BODY].data.player.properties) == true
+    <<: *global_settings
+    
