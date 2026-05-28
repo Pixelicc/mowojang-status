@@ -3,7 +3,7 @@ metrics: false
 storage:
   type: sqlite
   path: /data/data.db
-  
+
 ui:
   title: Mowojang Status Page
   header: Mowojang Status
@@ -11,7 +11,7 @@ ui:
   dashboard-heading: " "
   dashboard-subheading: " "
   default-sort-by: group
-  
+
 .global_settings: &global_settings
   interval: 5m
   ui:
@@ -73,7 +73,7 @@ endpoints:
       - "[BODY].name == Pixic"
       - has([BODY].properties) == true
     <<: *global_settings
-  - name: Mojang API - GET /session/minecraft/profile/:UUID?unsigned=false
+  - name: Mojang API - GET /session/minecraft/profile/:UUID - unsigned=false
     group: Minecraft API
     url: https://sessionserver.mojang.com/session/minecraft/profile/03197f1eabd74794b8668f513db2d2f0?unsigned=false
     conditions:
@@ -272,4 +272,3 @@ endpoints:
       - "[BODY].data.player.username == Pixic"
       - has([BODY].data.player.properties) == true
     <<: *global_settings
-    
