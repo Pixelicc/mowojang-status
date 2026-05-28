@@ -1,6 +1,6 @@
 # Mowojang Status
 
-This repository contains the status and uptime information for Minecraft, Mowojang, Seraph and similar Minecraft APIs.<br/>
+This repository contains the configuration for the status and uptime information of Minecraft, Mowojang, Seraph and similar Minecraft APIs.<br/>
 The Statuspage itself is powered by [Gatus](https://github.com/TwiN/gatus).
 
 ## Minecraft API
