@@ -3,6 +3,8 @@ metrics: false
 storage:
   type: sqlite
   path: /data/data.db
+  maximum-number-of-results: 250
+  maximum-number-of-events: 50
 
 ui:
   title: Mowojang Status Page
