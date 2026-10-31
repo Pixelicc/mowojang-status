@@ -204,24 +204,6 @@ endpoints:
       - "[BODY][0].id != ''"
       - "[BODY][1].id != ''"
     <<: *global_settings
-  - name: Ashcon API - GET /mojang/v2/user/:username
-    group: Other APIs
-    url: https://api.ashcon.app/mojang/v2/user/pixic
-    conditions:
-      - "[STATUS] == 200"
-      - "[BODY].uuid == 03197f1e-abd7-4794-b866-8f513db2d2f0"
-      - "[BODY].username == Pixic"
-      - has([BODY].textures) == true
-    <<: *global_settings
-  - name: Ashcon API - GET /mojang/v2/user/:UUID
-    group: Other APIs
-    url: https://api.ashcon.app/mojang/v2/user/03197f1eabd74794b8668f513db2d2f0
-    conditions:
-      - "[STATUS] == 200"
-      - "[BODY].uuid == 03197f1e-abd7-4794-b866-8f513db2d2f0"
-      - "[BODY].username == Pixic"
-      - has([BODY].textures) == true
-    <<: *global_settings
   - name: SkinRestorer API - GET /mojang/uuid/:username
     group: Other APIs
     url: https://eclipse.skinsrestorer.net/mojang/uuid/pixic
